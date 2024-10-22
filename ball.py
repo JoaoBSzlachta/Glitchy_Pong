@@ -7,9 +7,10 @@ class Ball:
         self.initial_y = initial_y
         self.radius = radius
         self.color = (252, 163, 17)
+        self.area = self.draw()
     
     def draw(self):
         return  pygame.draw.circle(self.screen, self.color, (self.initial_x, self.initial_y), self.radius)
 
-    def getRect(self):
-        return self.draw()
+    def getArea(self):
+        return self.area

@@ -22,8 +22,8 @@ y_speed = 10
 radius = 15
 x_ball = int(width/2)
 y_ball = int(height/2)
-x_ball_speed = 3
-y_ball_speed = 3
+x_ball_speed = 1
+y_ball_speed = 1
 
 pygame.init()
 screen = pygame.display.set_mode((width, height))
@@ -64,26 +64,35 @@ while running:
     x_ball += x_ball_speed
     y_ball += y_ball_speed
 
-    if pygame.Rect.colliderect(ball.getRect(), player_1.getRect()): 
+    if pygame.Rect.colliderect(ball.getArea(), player_1.getArea()): 
         x_ball_speed *= -1
         x_ball = player_1.initial_x + 24 + radius
-    if pygame.Rect.colliderect(ball.getRect(), player_2.getRect()): 
+        x_ball_speed += 0.5
+        y_ball_speed += 0.5
+    if pygame.Rect.colliderect(ball.getArea(), player_2.getArea()): 
         x_ball_speed *= -1
         x_ball = player_2.initial_x - radius
+        x_ball_speed -= 0.5
+        y_ball_speed -= 0.5
 
     # if x_ball >= x_p2 - radius or x_ball <= x_p1 + 24 + radius: 
     #     x_ball_speed *= -1 
 
     if y_ball >= height - radius or y_ball <= radius:
         y_ball_speed *= -1
+
     if x_ball >= width - radius:
         x_ball_speed *= -1
         score_p1 += 1
-        print("score_p1", score_p1, "|", "score_p2", score_p2)
+        x_ball_speed /= 2
+        y_ball_speed /= 2
+        #print("score_p1", score_p1, "|", "score_p2", score_p2)
     elif x_ball <= radius:
         x_ball_speed *= -1
         score_p2 += 1
-        print("score_p1", score_p1, "|", "score_p2", score_p2)
+        x_ball_speed /= 2
+        y_ball_speed /= 2
+        #print("score_p1", score_p1, "|", "score_p2", score_p2)
     
     screen.fill(BACKGROUND_COLOR)
     player_1.draw()
@@ -94,7 +103,7 @@ while running:
     #pygame.draw.circle(screen, BALL_COLOR, (x_ball, y_ball), radius)
 
     font = pygame.font.SysFont(None, 25)
-    text = font.render("Player 1: "+ str(score_p1) + " | " + "Player 2: " + str(score_p2), True, (0,0,0))
+    text = font.render(f"Player 1: {score_p1} | Player 2: {score_p2} | Ball Speed: {abs(x_ball_speed)}", True, (0,0,0))
     screen.blit(text,(0,0))
 
     pygame.display.flip()

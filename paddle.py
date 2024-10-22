@@ -6,10 +6,11 @@ class Paddle:
         self.initial_x = initial_x
         self.initial_y = initial_y
         self.screen = screen
+        self.area = self.draw()
         
 
     def draw(self):
         return pygame.draw.rect(self.screen, self.color, pygame.Rect(self.initial_x, self.initial_y, 24, 100))
     
-    def getRect(self):
-        return self.draw()
+    def getArea(self):
+        return self.area
